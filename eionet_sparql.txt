@@ -1,0 +1,17 @@
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+PREFIX j.0: <http://rdfdata.eionet.europa.eu/airbase/schema/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+SELECT ?urie ?labele ?urin ?labeln WHERE
+{
+  BIND("Carbon monoxide" AS ?pollutant)
+  SERVICE<http://cr.eionet.europa.eu/sparql>
+  {
+    ?urie skos:inScheme <http://rdfdata.eionet.europa.eu/airquality/components/>.
+    ?urie skos:prefLabel ?labele.
+    ?urie j.0:pollutant ?pollutant.
+  }.
+  <http://vocab.nerc.ac.uk/collection/P07/current/> skos:member ?urin.
+  ?urin skos:prefLabel ?labeln.
+  ?urin skos:definition ?defn.
+  FILTER CONTAINS (str(lcase(?defn)),str(lcase(?pollutant)))
+}

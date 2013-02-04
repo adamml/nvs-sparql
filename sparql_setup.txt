@@ -1,0 +1,96 @@
+- Downloaded Jena Fuseki (0.2.3)
+- Downloaded Jena SDB (full distribution - 0.9.0 incubation)
+
+- Run command = java -jar fuseki-server.jar --config=init.ttl
+
+-- GetCollections
+PREFIX dc:<http://purl.org/dc/elements/1.1/>
+PREFIX skos:<http://www.w3.org/2004/02/skos/core#>
+PREFIX rdf:<http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+SELECT ?s ?p WHERE {?s rdf:type skos:Collection .
+                    ?s dc:title ?p}
+
+-- GetCollection
+PREFIX dc:<http://purl.org/dc/elements/1.1/>
+PREFIX skos:<http://www.w3.org/2004/02/skos/core#>
+PREFIX rdf:<http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+SELECT ?o ?p WHERE {<http://vocab.nerc.ac.uk/collection/P03/current/> rdf:type skos:Collection.
+                    <http://vocab.nerc.ac.uk/collection/P03/current/>  ?o ?p}
+                    
+-- GetConcept
+PREFIX dc:<http://purl.org/dc/elements/1.1/>
+PREFIX skos:<http://www.w3.org/2004/02/skos/core#>
+PREFIX rdf:<http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+SELECT ?o ?p WHERE {<http://vocab.nerc.ac.uk/collection/P03/current/D005/> rdf:type skos:Concept.
+                    <http://vocab.nerc.ac.uk/collection/P03/current/D005/>  ?o ?p}
+
+-- GetSchemes
+PREFIX dc:<http://purl.org/dc/elements/1.1/>
+PREFIX skos:<http://www.w3.org/2004/02/skos/core#>
+PREFIX rdf:<http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+SELECT ?s ?o WHERE {?s rdf:type skos:ConceptScheme.
+                    ?s dc:title ?o}
+
+-- GetScheme
+PREFIX dc:<http://purl.org/dc/elements/1.1/>
+PREFIX skos:<http://www.w3.org/2004/02/skos/core#>
+PREFIX rdf:<http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+SELECT ?p ?o WHERE {{<http://vocab.nerc.ac.uk/scheme/ICANDIS/current/> ?p ?o.
+                    <http://vocab.nerc.ac.uk/scheme/ICANDIS/current/> rdf:type skos:ConceptScheme}
+             UNION {<http://vocab.nerc.ac.uk/scheme/ICANDIS/current/> rdf:type skos:ConceptScheme.
+                   ?o ?p <http://vocab.nerc.ac.uk/scheme/ICANDIS/current/>}}
+                    
+-- GetTopConcepts
+PREFIX dc:<http://purl.org/dc/elements/1.1/>
+PREFIX skos:<http://www.w3.org/2004/02/skos/core#>
+PREFIX rdf:<http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+SELECT ?o WHERE {<http://vocab.nerc.ac.uk/scheme/NETMAR_OCEAN/current/> skos:hasTopConcept ?o}
+
+--GetAllTopConcepts
+PREFIX dc:<http://purl.org/dc/elements/1.1/>
+PREFIX skos:<http://www.w3.org/2004/02/skos/core#>
+PREFIX rdf:<http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+SELECT ?s ?o WHERE {?s skos:hasTopConcept ?o}
+                
+-- GetRelatedConcepts
+PREFIX dc:<http://purl.org/dc/elements/1.1/>
+PREFIX skos:<http://www.w3.org/2004/02/skos/core#>
+PREFIX rdf:<http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX owl:<http://www.w3.org/2006/12/owl2-xml#>
+SELECT ?p ?o WHERE {<http://vocab.nerc.ac.uk/collection/P03/current/D005/> rdf:type skos:Concept.
+                    <http://vocab.nerc.ac.uk/collection/P03/current/D005/> ?p ?o
+                    FILTER(?p = skos:broader || ?p = skos:narrower || ?p = skos:related || ?p = owl:sameAs)}
+
+--GetAllExternalMappings
+PREFIX dc:<http://purl.org/dc/elements/1.1/>
+PREFIX skos:<http://www.w3.org/2004/02/skos/core#>
+PREFIX owl:<http://www.w3.org/2006/12/owl2-xml#>
+SELECT ?s ?p ?o WHERE {?s ?p ?o.
+       MINUS{?s ?p ?o FILTER(regex(str(?o),'http://vocab.nerc.ac.uk/','i'))}
+       FILTER(?p = skos:broader || ?p = skos:narrower || ?p = skos:related || ?p = owl:sameAs)}
+
+-- SearchVocab
+
+
+-- VerifyConcept
+PREFIX dc:<http://purl.org/dc/elements/1.1/>
+PREFIX skos:<http://www.w3.org/2004/02/skos/core#>
+PREFIX rdf:<http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+SELECT (count(?o) as ?count) WHERE {<http://vocab.nerc.ac.uk/collection/P01/current/PSALCU01/> ?o skos:Concept}
+
+-- What DOIs
+PREFIX dc:<http://purl.org/dc/elements/1.1/>
+SELECT ?s ?oo WHERE {?s dc:identifier ?o.
+                     ?s dc:title ?oo
+              FILTER regex(str(?o),'dx.doi.org','i')}
+          
+-- Get DOI
+PREFIX dc:<http://purl.org/dc/elements/1.1/>
+SELECT ?p ?o WHERE {<https://www.bodc.ac.uk/data/published_data_library/catalogue/41479c42_4dfb_4da9_be97_4c532ce13922/> ?p ?o}
+
+-- Count triples
+SELECT (count(?o) as ?count) where {?s ?p ?o}
+
+-- Find subject == object
+select ?s ?o ?p WHERE {?s ?o ?p
+FILTER ( ?s = ?p )}

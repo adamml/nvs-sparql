@@ -1,0 +1,5 @@
+PREFIX skos:<http://www.w3.org/2004/02/skos/core#>
+PREFIX rdf:<http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+SELECT ?s ?o ?p WHERE
+{?all <http://www.w3.org/2004/02/skos/core#member> ?s.
+?s ?o ?p} LIMIT 100
