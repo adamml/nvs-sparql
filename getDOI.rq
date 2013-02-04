@@ -1,0 +1,2 @@
+PREFIX dc:<http://purl.org/dc/elements/1.1/>
+SELECT ?p ?o WHERE {<https://www.bodc.ac.uk/data/published_data_library/catalogue/41479c42_4dfb_4da9_be97_4c532ce13922/> ?p ?o}
