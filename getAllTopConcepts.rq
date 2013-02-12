@@ -1,3 +1,7 @@
+#Return all of the concepts from the NERC Vocabulary Server which are top
+#concepts (entry points) of a concept scheme
+# @title Get all top concepts on the NERC Vocabulary Server
+# @tag api
 PREFIX dc:<http://purl.org/dc/elements/1.1/>
 PREFIX skos:<http://www.w3.org/2004/02/skos/core#>
 PREFIX rdf:<http://www.w3.org/1999/02/22-rdf-syntax-ns#>

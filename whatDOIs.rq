@@ -1,3 +1,7 @@
+#Return a list of all datasets published by BODC which have been assigned
+#Digital Object Identifiers
+# @title What datasets have been published with DOIs
+# @tag data-publication
 PREFIX dc:<http://purl.org/dc/elements/1.1/>
 SELECT ?s ?oo WHERE {?s dc:identifier ?o.
                      ?s dc:title ?oo

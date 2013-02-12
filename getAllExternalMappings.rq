@@ -1,6 +1,10 @@
+#Retrieve all the mappings between SKOS concepts on the NERC Vocabulary Server
+#and the rest of the semantic web
+# @title Get all mappings from the NERC Vocabulary Server to the rest of the world
 PREFIX dc:<http://purl.org/dc/elements/1.1/>
 PREFIX skos:<http://www.w3.org/2004/02/skos/core#>
 PREFIX owl:<http://www.w3.org/2006/12/owl2-xml#>
 SELECT ?s ?p ?o WHERE {?s ?p ?o.
        MINUS{?s ?p ?o FILTER(regex(str(?o),'http://vocab.nerc.ac.uk/','i'))}
-       FILTER(?p = skos:broader || ?p = skos:narrower || ?p = skos:related || ?p = owl:sameAs)}
+       FILTER(?p = skos:broader || ?p = skos:narrower || ?p = skos:related 
+			|| ?p = owl:sameAs)}

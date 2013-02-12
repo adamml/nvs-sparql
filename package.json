@@ -1,0 +1,6 @@
+{
+	"title": "NVS SPARQL queries",
+	"description": "A collection of SPARQL queries for use against the NERC Vocabulary Server endpoint",
+	"author": ["Adam Leadbetter"],
+	"endpoint": ["http://vocab.nerc.ac.uk/sparql/sparql"]
+}

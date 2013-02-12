@@ -1,0 +1,18 @@
+#Demonstrates the use of federated SPARQL queries by pulling instrument
+#category labels from the NERC Vocabulary Server and instances of instruments
+#from the Rolling Dec to Repository (R2R) linked data server
+# @title Federation demonstrator between the NERC Vocabulary Server and R2R
+# @tag federated
+PREFIX skos:<http://www.w3.org/2004/02/skos/core#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+SELECT ?nvsp ?rvl WHERE
+{
+  SERVICE <http://linked.rvdata.us/sparql>
+  {
+    ?rvs rdf:type ?nvs
+    FILTER CONTAINS (str(?nvs),'vocab.nerc.ac.uk').
+    ?rvs rdfs:label ?rvl
+  }
+  ?nvs skos:prefLabel ?nvsp
+} ORDER BY lcase(str(?nvsp))

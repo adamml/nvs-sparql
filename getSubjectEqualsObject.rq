@@ -1,2 +1,4 @@
+#Find instances where the subject and object of a triple are equal
+# @title Get instance where the triple has the same subject and object
 select ?s ?o ?p WHERE {?s ?o ?p
 FILTER ( ?s = ?p )}
