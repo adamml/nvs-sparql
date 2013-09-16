@@ -1,0 +1,13 @@
+#Get all other SKOS concepts / RDF instances related to a given SKOS concept
+# @title Get all concepts related to a given concept
+# @tag api
+PREFIX dc:<http://purl.org/dc/elements/1.1/>
+PREFIX skos:<http://www.w3.org/2004/02/skos/core#>
+PREFIX rdf:<http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX owl:<http://www.w3.org/2006/12/owl2-xml#>
+SELECT ?p ?o WHERE {<http://vocab.nerc.ac.uk/collection/P03/current/D005/> 
+							rdf:type skos:Concept.
+                    <http://vocab.nerc.ac.uk/collection/P03/current/D005/> 
+							?p ?o
+                    FILTER(?p = skos:broader || ?p = skos:narrower || 
+						?p = skos:related || ?p = owl:sameAs)}

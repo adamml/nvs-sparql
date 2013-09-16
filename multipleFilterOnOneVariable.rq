@@ -1,0 +1,17 @@
+#A query built for ICES to discover NERC Vocabulary Server paramater usage
+#vocabulary terms (P01 entries) using multiple search fields
+# @title Multiple search fields on one SPARQL variable
+# @param measured: the parameter measured
+# @param where: the environmental sphere in which the measurement was made
+# @param method: the scientific method used to make the measurement
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+SELECT ?b ?c WHERE
+{
+  BIND("Concentration of nickel" AS ?measured)
+  BIND("weight of sediment" AS ?where)
+  BIND("standard sediment" AS ?method)
+  ?b skos:prefLabel ?c
+  FILTER CONTAINS (str(lcase(?c)),str(lcase(?measured))).
+  FILTER CONTAINS (str(lcase(?c)),str(lcase(?where))).
+  FILTER CONTAINS (str(lcase(?c)),str(lcase(?method)))
+}

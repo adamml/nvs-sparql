@@ -1,0 +1,8 @@
+#Return all triples for a given SKOS concept
+# @title Get a concept
+# @tag api
+PREFIX dc:<http://purl.org/dc/elements/1.1/>
+PREFIX skos:<http://www.w3.org/2004/02/skos/core#>
+PREFIX rdf:<http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+SELECT ?o ?p WHERE {<http://vocab.nerc.ac.uk/collection/P03/current/D005/> rdf:type skos:Concept.
+                    <http://vocab.nerc.ac.uk/collection/P03/current/D005/>  ?o ?p}

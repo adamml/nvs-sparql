@@ -1,0 +1,11 @@
+#A federated query which matches CEH discovery metadata keywords to
+#standard terms on the NERC Vovabulary Server. The query federates
+#against both the data endpoint, the CEH CAST endpoint and the NVS2.0 endpoint
+# @title CEH discovery metadata keywords to NVS standardised keywords
+PREFIX skos:<http://www.w3.org/2004/02/skos/core#>
+select ?a ?g where {?a ?b ?c
+FILTER CONTAINS (str(?c),'onto.nerc.ac.uk').
+service <http://onto.nerc.ac.uk/PoolParty/sparql/CAST>
+{?c ?d ?e
+FILTER CONTAINS (str(?e),'vocab.nerc.ac.uk')}.
+service <http://vocab.nerc.ac.uk/sparql/sparql>{?e skos:prefLabel ?g}}

@@ -1,0 +1,7 @@
+#Verify a concept exists using a URI (in this case a URL)
+# @title Verify a concept exists using a URI
+# @tag api
+PREFIX dc:<http://purl.org/dc/elements/1.1/>
+PREFIX skos:<http://www.w3.org/2004/02/skos/core#>
+PREFIX rdf:<http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+SELECT (count(?o) as ?count) WHERE {<http://vocab.nerc.ac.uk/collection/P01/current/PSALCU01/> ?o skos:Concept}

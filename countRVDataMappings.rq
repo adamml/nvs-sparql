@@ -1,0 +1,15 @@
+#A basic federated query which counts the number of valid mappings between
+#the Rolling Deck to Repository Linked Data server and the NERC Vocabulary
+#Server
+# @title Count the number of valid R2R to NVS mappings
+# @tag federated
+PREFIX skos:<http://www.w3.org/2004/02/skos/core#>
+SELECT (count(?rvs) AS ?rvsCount) WHERE
+{
+  SERVICE <http://linked.rvdata.us/sparql>
+  {
+    ?rvs ?rvp ?nvs 
+    FILTER(REGEX(STR(?nvs),'http://vocab.nerc.ac.uk/','i'))
+  }
+  ?nvs skos:prefLabel ?nvsp
+}
