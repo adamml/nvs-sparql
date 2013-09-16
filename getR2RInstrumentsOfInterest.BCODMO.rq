@@ -1,0 +1,16 @@
+#Return all instruments in R2R also in (i.e. of interest to) BCO-DMO
+# @title Instruments in R2R also in (i.e. of interest to) BCO-DMO
+# @tag federated
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX skos:<http://www.w3.org/2004/02/skos/core#>
+PREFIX bcodmo: <http://escience.rpi.edu/ontology/BCO-DMO/bcodmo/3/0/>
+select ?d ?rvl ?a where
+{SERVICE <http://escience.rpi.edu/endpoint/sparql/>
+{?a ?b bcodmo:Instrument.?a ?b ?c}
+SERVICE <http://linked.rvdata.us/sparql>
+{?rvs rdf:type ?c
+    FILTER CONTAINS (str(?c),'vocab.nerc.ac.uk').
+    ?rvs rdfs:label ?rvl}
+?c skos:prefLabel ?d}
+LIMIT 10000
